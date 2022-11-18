@@ -1,0 +1,24 @@
+# version of syntax
+version: "3.9"
+
+# main block - we specify services
+services:
+  app:
+
+    # we specify that we want to build docker file inside root directory
+    build:
+      context: .
+      args:
+        - DEV=true
+    
+    # this is how to connect to network
+    ports:
+      - "8000:8000"
+
+    # mapping directories from our system into Docker container 
+    volumes:
+      - ./app:/app
+
+    # automatically sync code in our project to the code running in the container
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
